@@ -20,6 +20,7 @@
             <Button Click="NavigateResourceId" Content="Navigate" />
             <Button Click="PlayResourceId" Content="Play" />
             <Button x:Name="DisablePopUp" Content="停用警告弹窗" Click="DisablePopUpButton_Click" />
+            <Button x:Name="InstallUpdate" Content="手动安装更新" Click="InstallUpdate_Click" />
         </StackPanel>
         <ListView ItemsSource="{x:Bind hyplayer:Common.Logs}" />
     </StackPanel>

@@ -92,4 +92,9 @@ public sealed partial class TestPage : Page
         public bool IsLowCache { get; set; }
         public List<string> ErrorMessageList { get; set; }
     }
+
+    private void InstallUpdate_Click(object sender, RoutedEventArgs e)
+    {
+        _ = UpdateManager.UpdateInstaller.ManuallyInstallUpdate();
+    }
 }

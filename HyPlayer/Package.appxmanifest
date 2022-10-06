@@ -5,7 +5,8 @@
         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
         xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
         xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
-        IgnorableNamespaces="uap mp uap3">
+        xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+		IgnorableNamespaces="uap mp uap3 rescap">
 
     <Identity
             Name="48848aaaaaaccd.HyPlayer"
@@ -60,7 +61,7 @@
             </uap:VisualElements>
             <Extensions>
                 <uap:Extension Category="windows.fileTypeAssociation">
-                    <uap:FileTypeAssociation Name=".txt">
+                    <uap:FileTypeAssociation  Name="supportedfile">
                         <uap:SupportedFileTypes>
                             <uap:FileType>.mp3</uap:FileType>
                             <uap:FileType>.flac</uap:FileType>
@@ -89,5 +90,6 @@
         <uap:Capability Name="removableStorage"/>
         <uap:Capability Name="musicLibrary"/>
         <Capability Name="privateNetworkClientServer"/>
+        <rescap:Capability Name="packageManagement"/>
     </Capabilities>
 </Package>

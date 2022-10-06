@@ -8,6 +8,8 @@ using Windows.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using HttpClient = Windows.Web.Http.HttpClient;
+using Windows.Management.Deployment;
+using Windows.Storage.Pickers;
 
 namespace HyPlayer.Classes;
 
@@ -170,6 +172,25 @@ public static class UpdateManager
             Common.Setting.canaryChannelAvailability = false;
             Common.AddToTeachingTipLists("未搜索到邮箱", "未搜索到此邮箱,请检查此邮箱是否是申请内测通道所使用的邮箱。\nCanary通道未能解锁");
             if (Common.Setting.UpdateSource == 2) Common.Setting.UpdateSource = 1;
+        }
+    }
+    public static class UpdateInstaller
+    {
+        public static async Task ManuallyInstallUpdate() 
+        {
+            FileOpenPicker picker = new FileOpenPicker();
+            picker.FileTypeFilter.Add(".msixbundle");
+            var filestorage = await picker.PickSingleFileAsync();
+            if (filestorage != null)
+            {
+                InstallUpdate(new Uri(filestorage.Path));
+            }
+        }
+        public static void InstallUpdate(Uri sourceFileUri)
+        {
+            var packageManager = new PackageManager();
+            Common.AddToTeachingTipLists("正在安装更新", "应用正在安装更新，即将重启");
+            _ = packageManager.UpdatePackageAsync(sourceFileUri, null, DeploymentOptions.ForceApplicationShutdown);
         }
     }
 }
