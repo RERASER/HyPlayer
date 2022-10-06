@@ -10,6 +10,8 @@ using Newtonsoft.Json.Linq;
 using HttpClient = Windows.Web.Http.HttpClient;
 using Windows.Management.Deployment;
 using Windows.Storage.Pickers;
+using Windows.Networking.BackgroundTransfer;
+using Windows.Storage;
 
 namespace HyPlayer.Classes;
 
@@ -185,6 +187,29 @@ public static class UpdateManager
             {
                 InstallUpdate(new Uri(filestorage.Path));
             }
+        }
+        public static async Task InstallUpdateFromInternet(Uri sourceFileUri)
+        {
+            try 
+            {
+                var resultFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("UpdatePackage.msixbundle", CreationCollisionOption.ReplaceExisting);
+                BackgroundDownloader backgroundDownloader = new BackgroundDownloader();
+                DownloadOperation downloadOperation = backgroundDownloader.CreateDownload(sourceFileUri, resultFile);
+                Common.AddToTeachingTipLists("开始下载更新包");
+                await downloadOperation.StartAsync().AsTask();
+                Common.AddToTeachingTipLists("更新包下载完成");
+                InstallUpdate(new Uri(downloadOperation.ResultFile.Path));
+            }
+            catch(Exception ex)
+            {
+                Common.AddToTeachingTipLists("下载更新包时发生错误", ex.ToString());
+            }
+            
+        }
+        public static async Task DeleteUpdatePackage()
+        {
+            var resultFile = await ApplicationData.Current.TemporaryFolder.TryGetItemAsync("UpdatePackage.msixbundle");
+            if (resultFile != null) await resultFile.DeleteAsync();
         }
         public static void InstallUpdate(Uri sourceFileUri)
         {

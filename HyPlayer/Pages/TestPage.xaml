@@ -20,8 +20,14 @@
             <Button Click="NavigateResourceId" Content="Navigate" />
             <Button Click="PlayResourceId" Content="Play" />
             <Button x:Name="DisablePopUp" Content="停用警告弹窗" Click="DisablePopUpButton_Click" />
-            <Button x:Name="InstallUpdate" Content="手动安装更新" Click="InstallUpdate_Click" />
         </StackPanel>
         <ListView ItemsSource="{x:Bind hyplayer:Common.Logs}" />
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="更新包下载地址："/>
+            <TextBox x:Name="UpdateSourceLink"/>
+            <Button x:Name="InstallUpdateFromInternet" Content="联网安装更新" Click="InstallUpdateFromInternet_Click" HorizontalAlignment="Left"/>
+            <Button x:Name="InstallUpdateFromLocalFile" Content="手动安装更新" Click="InstallUpdateFromLocalFile_Click" HorizontalAlignment="Left"/>
+            <Button x:Name="DeleteUpdatePackage" Content="删除更新包" Click="DeleteUpdatePackage_Click" HorizontalAlignment="Left"/>
+        </StackPanel>
     </StackPanel>
 </Page>

@@ -93,8 +93,19 @@ public sealed partial class TestPage : Page
         public List<string> ErrorMessageList { get; set; }
     }
 
-    private void InstallUpdate_Click(object sender, RoutedEventArgs e)
+    private void InstallUpdateFromLocalFile_Click(object sender, RoutedEventArgs e)
     {
         _ = UpdateManager.UpdateInstaller.ManuallyInstallUpdate();
+    }
+
+    private void InstallUpdateFromInternet_Click(object sender, RoutedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(UpdateSourceLink.Text)) _ = UpdateManager.UpdateInstaller.InstallUpdateFromInternet(new Uri(UpdateSourceLink.Text));
+        else Common.AddToTeachingTipLists("无法下载", "下载链接不合法");
+    }
+
+    private void DeleteUpdatePackage_Click(object sender, RoutedEventArgs e)
+    {
+        _ = UpdateManager.UpdateInstaller.DeleteUpdatePackage();
     }
 }
