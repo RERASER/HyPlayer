@@ -991,7 +991,6 @@ namespace HyPlayer
                 //HyPlayList.AudioEffectsProperties["AudioFade_FadeDuration"] = value;
             }
 
-            set => ApplicationData.Current.LocalSettings.Values[nameof(fadeInOutTimePause)] = value;
         }
 
         public bool playBarMargin
